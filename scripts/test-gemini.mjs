@@ -1,20 +1,13 @@
+// Script de prueba para conectar con Gemini usando @google/generative-ai
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const apiKey = process.env.GENERATIVE_LANGUAGE_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
 
 async function run() {
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-
-    // Este método devuelve todos los modelos disponibles para tu clave
-    const list = await genAI.listModels();
-
-    console.log("✅ Modelos disponibles en tu cuenta:");
-    console.log(JSON.stringify(list, null, 2));
-  } catch (err) {
-    console.error("❌ Error listando modelos:", err);
-    process.exit(1);
-  }
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const result = await model.generateContent("Escribe un título creativo para un post sobre envíos internacionales.");
+  console.log(result.response.text());
 }
 
 run();
