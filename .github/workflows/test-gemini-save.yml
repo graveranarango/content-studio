@@ -1,0 +1,23 @@
+name: Test Gemini Save to Supabase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-gemini-save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependencias
+        run: npm install @google/generative-ai @supabase/supabase-js
+
+      - name: Ejecutar prueba Gemini con Supabase
+        run: node scripts/test-gemini.mjs
+        env:
+          GENERATIVE_LANGUAGE_API_KEY: ${{ secrets.GENERATIVE_LANGUAGE_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
