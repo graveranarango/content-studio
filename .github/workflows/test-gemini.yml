@@ -1,0 +1,21 @@
+name: Test Gemini API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-gemini:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar librería de Gemini
+        run: npm install @google/generative-ai
+
+      - name: Ejecutar prueba Gemini
+        run: node scripts/test-gemini.mjs
+        env:
+          GENERATIVE_LANGUAGE_API_KEY: ${{ secrets.GENERATIVE_LANGUAGE_API_KEY }}
